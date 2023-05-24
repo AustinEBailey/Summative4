@@ -7,11 +7,21 @@ public class MiniGame {
         clrscn();
         System.out.println("welcome to Connect four pleadse slect a row to place your piece");
         int[][] map = loadMap();
-        enter();
-        prnMap(map);
-        enter();
-        prnMap(map);
+        String sprite = "!";
+        int pCol = 0;
+        int pRow = 0;
+        boolean done = false;
+        while (!done) {
+            System.out.print("\033[H\033[2J");
+            prnMap(map, sprite, pCol, pRow);
+            String input = in.nextLine();
+            if (input.equals("l")) {
+                pCol--;
+            } else if (input.equals("r")) {
+                pCol++;
+            }
 
+        }
     }
 
     public static int[][] loadMap() {
@@ -27,11 +37,16 @@ public class MiniGame {
         return map;
     }
 
-    public static void prnMap(int[][] map) {
+    public static void prnMap(int[][] map, String playerSprite, int pCol, int Row) {
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
-                int prnMap = map[i][j];
-                System.out.print(prnMap);
+
+                if ((i == Row && j == pCol)) {
+                    System.out.print(playerSprite);
+                } else {
+                    int prnMap = map[i][j];
+                    System.out.print(prnMap);
+                }
             }
             System.out.println();
 
@@ -49,7 +64,7 @@ public class MiniGame {
         prn("\033[2J");
     }
 
-    //press enter to continue
+    // press enter to continue
     public static void enter() {
         Scanner in = new Scanner(System.in);
         prn("Press Enter To Continue");
