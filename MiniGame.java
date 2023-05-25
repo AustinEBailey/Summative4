@@ -5,20 +5,28 @@ public class MiniGame {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         clrscn();
-        System.out.println("welcome to Connect four pleadse slect a row to place your piece");
+        prn("welcome to Connect four please slect a row to place your piece");
+
         int[][] map = loadMap();
+        String[] coins = { "0", "o" };
+
         String sprite = "!";
-        int pCol = 0;
+        int pCollum = 0;
         int pRow = 0;
+
         boolean done = false;
         while (!done) {
-            System.out.print("\033[H\033[2J");
-            prnMap(map, sprite, pCol, pRow);
+
+            prn("\033[H\033[2J");
+            prnMap(map, pCollum, sprite, pRow, coins);
             String input = in.nextLine();
+
             if (input.equals("l")) {
-                pCol--;
+                pCollum--;
             } else if (input.equals("r")) {
-                pCol++;
+                pCollum++;
+            } else if (input.equals("c")) {
+                coin(map, pCollum);
             }
 
         }
@@ -37,21 +45,24 @@ public class MiniGame {
         return map;
     }
 
-    public static void prnMap(int[][] map, String playerSprite, int pCol, int Row) {
+    // prints the map.
+    public static void prnMap(int[][] map, int pCollum, String sprite, int pRow, String[] coins) {
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
-
-                if ((i == Row && j == pCol)) {
-                    System.out.print(playerSprite);
+                if ((i == pRow && j == pCollum)) {
+                    prn(sprite);
                 } else {
                     int prnMap = map[i][j];
-                    System.out.print(prnMap);
+                    System.out.print(coins[prnMap]);
                 }
             }
             System.out.println();
-
         }
+    }
 
+    public static int[][] coin(int[][] map, int pCollum) {
+        map[3][pCollum] = 1;
+        return map;
     }
 
     // print stuff
