@@ -16,9 +16,10 @@ public class MiniGame {
 
         String sprite = "!";
         int playerCollum = 0;
-        int playerRow = 0;
+            int playerRow = 0;
 
         while (done != true) {
+            
             prn("\033[H\033[2J");
 
             // aiCoinInsert(map, playerRow, playerRow);
@@ -26,26 +27,33 @@ public class MiniGame {
 
             String input = in.nextLine();
             String[] inputWords = input.split(",");
-
+            int colMove = 0;
             if (inputWords[0].equals("collum")) {
-                playerCollum = Integer.parseInt(inputWords[1]);
+                colMove = Integer.parseInt(inputWords[1]);
 
             } else if (inputWords[0].equals("coin")) {
+                doneCollumCheck(map, playerRow, playerRow);
                 insertCion(map, playerCollum, playerRow);
-                // doneCollumCheck(map, playerRow, playerRow);
+
+            }
+
+            if (canMove(map,colMove)) {
+                playerCollum = colMove ;
             }
 
         }
         prn("Game over");
     }
 
+    
+
     // dose the initialization of the map
     public static int[][] loadMap() {
         int[][] map = {
-                { 0, 0, 0, 0, 1, 0, 0 },
-                { 0, 0, 1, 0, 0, 0, 0 },
-                { 0, 0, 1, 0, 0, 0, 0 },
-                { 0, 0, 1, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 0, 0 },
                 { 0, 0, 0, 0, 0, 0, 0 },
                 { 0, 0, 0, 0, 0, 0, 0 }
         };
@@ -72,15 +80,15 @@ public class MiniGame {
 
     // prints coins where ever the sprite is when "c" is entered
     public static void insertCion(int[][] map, int playerCollum, int playerRow) {
-        int num = 0;
+        int count = 0;
         for (int i = 5; i > 0; i--) {
             if (map[i][playerCollum] != 0) {
-                num = 0;
+                count = 0;
             } else {
-                num++;
+                count++;
             }
         }
-        map[num][playerCollum] = 1;
+        map[count][playerCollum] = 1;
 
     }
 
@@ -91,7 +99,7 @@ public class MiniGame {
 
             for (j = 0; j < map[i].length; j++) {
 
-                if (map[j][i] != 0) {
+                if (map[i][j] != 0) {
                     coinNum++;
                 } else if (coinNum >= 4) {
                     done = true;
@@ -101,9 +109,15 @@ public class MiniGame {
             }
 
         }
-
         return done;
+    }
 
+    public static boolean canMove(int[][] map, int col) {
+        int row=0;
+        if (col < 0 || col >= map[row].length)
+            return false;
+        
+        return map[row][col] == 0;
     }
 
     public static void aiCoinInsert(int map[][], int playerRow, int playerCollum) {
