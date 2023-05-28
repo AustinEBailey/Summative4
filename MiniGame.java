@@ -19,7 +19,6 @@ public class MiniGame {
         int playerRow = 0;
 
         while (done != true) {
-
             prn("\033[H\033[2J");
 
             // aiCoinInsert(map, playerRow, playerRow);
@@ -33,7 +32,7 @@ public class MiniGame {
 
             } else if (inputWords[0].equals("coin")) {
                 insertCion(map, playerCollum, playerRow);
-                doneCollumCheck(map, playerRow, playerRow);
+                // doneCollumCheck(map, playerRow, playerRow);
             }
 
         }
@@ -73,12 +72,15 @@ public class MiniGame {
 
     // prints coins where ever the sprite is when "c" is entered
     public static void insertCion(int[][] map, int playerCollum, int playerRow) {
-
-        if (map[playerRow][playerCollum] != 0) {
-
-        } else {
-            map[playerRow][playerCollum] = 1;
+        int num = 0;
+        for (int i = 5; i > 0; i--) {
+            if (map[i][playerCollum] != 0) {
+                num = 0;
+            } else {
+                num++;
+            }
         }
+        map[num][playerCollum] = 1;
 
     }
 
@@ -87,7 +89,7 @@ public class MiniGame {
         int i = 0;
         for (i = 0; i < map.length; i++) {
 
-            for (j = 0; j < map.length; j++) {
+            for (j = 0; j < map[i].length; j++) {
 
                 if (map[j][i] != 0) {
                     coinNum++;
