@@ -8,44 +8,41 @@ public class MiniGame {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         clrscn();
-        prn("welcome to Connect four please slect a row to place your piece\n To place a coin type coin\n To move to a diffrent Collum Type collum,number\n"
-                + enter());
-
+        Text(done);
         int[][] map = loadMap();
         String[] coins = { "0", "o", "x" };
 
         String sprite = "!";
-        int playerCollum = 0;
-            int playerRow = 0;
+        int playerCol = 0;
+        int playerRow = 0;
 
         while (done != true) {
-            
-            prn("\033[H\033[2J");
 
+            clrscn();
             // aiCoinInsert(map, playerRow, playerRow);
-            prnMap(map, playerCollum, sprite, playerRow, coins);
+            prnMap(map, playerCol, sprite, playerRow, coins);
 
             String input = in.nextLine();
             String[] inputWords = input.split(",");
             int colMove = 0;
-            if (inputWords[0].equals("collum")) {
+
+            if (inputWords[0].equals("col")) {
                 colMove = Integer.parseInt(inputWords[1]);
 
             } else if (inputWords[0].equals("coin")) {
-                doneCollumCheck(map, playerRow, playerRow);
-                insertCion(map, playerCollum, playerRow);
 
+                insertCion(map, playerCol, playerRow);
+                doneCheck(map, playerRow, playerRow);
             }
 
-            if (canMove(map,colMove)) {
-                playerCollum = colMove ;
+            if (canMove(map, colMove)) {
+                playerCol = colMove;
             }
 
         }
-        prn("Game over");
-    }
+        prn("Game over!");
 
-    
+    }
 
     // dose the initialization of the map
     public static int[][] loadMap() {
@@ -53,20 +50,20 @@ public class MiniGame {
                 { 0, 0, 0, 0, 0, 0, 0 },
                 { 0, 0, 0, 0, 0, 0, 0 },
                 { 0, 0, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 0, 0 }
+                { 0, 0, 0, 2, 0, 0, 0 },
+                { 0, 0, 2, 2, 0, 0, 0 },
+                { 0, 2, 2, 2, 0, 0, 0 }
         };
 
         return map;
     }
 
     // prints the map.
-    public static void prnMap(int[][] map, int playerCollum, String sprite, int playerRow, String[] coins) {
+    public static void prnMap(int[][] map, int playerCol, String sprite, int playerRow, String[] coins) {
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
 
-                if ((i == playerRow && j == playerCollum)) {
+                if ((i == playerRow && j == playerCol)) {
                     prn(sprite);
 
                 } else {
@@ -79,63 +76,100 @@ public class MiniGame {
     }
 
     // prints coins where ever the sprite is when "c" is entered
-    public static void insertCion(int[][] map, int playerCollum, int playerRow) {
+    public static void insertCion(int[][] map, int playerCol, int playerRow) {
         int count = 0;
         for (int i = 5; i > 0; i--) {
-            if (map[i][playerCollum] != 0) {
+            if (map[i][playerCol] != 0) {
                 count = 0;
             } else {
                 count++;
             }
         }
-        map[count][playerCollum] = 1;
+        map[count][playerCol] = 1;
 
     }
 
-    public static boolean doneCollumCheck(int map[][], int playerRow, int playerCollum) {
-        int j = 0;
-        int i = 0;
-        for (i = 0; i < map.length; i++) {
+    // checks if there is four or more then one coin in a line
+    public static boolean doneCheck(int map[][], int playerRow, int playerCol) {
 
-            for (j = 0; j < map[i].length; j++) {
+        // cheks collums and rows for "1" and if there are four "1"'s in a row it ends
+        // the game
+        for (int i = 0; i < map.length; i++) {
 
-                if (map[i][j] != 0) {
-                    coinNum++;
-                } else if (coinNum >= 4) {
+            for (int j = 0; j < map[i].length; j++) {
+                // collums
+                if (j < map[i].length - 3 && map[i][j] == 1 && map[i][j + 1] == 1 && map[i][j + 2] == 1
+                        && map[i][j + 3] == 1) {
                     done = true;
-                } else {
-                    coinNum = 0;
+                }
+                // rows
+                if (i < map[i].length - 4 && map[i][j] == 1 && map[i + 1][j] == 1 && map[i + 2][j] == 1
+                        && map[i + 3][j] == 1) {
+                    done = true;
+                }
+                // diaganal left
+                if (i < map[i].length - 4 && map[i][j] == 1 && map[i + 1][j + 1] == 1 && map[i + 2][j + 2] == 1
+                        && map[i + 3][j + 3] == 1) {
+                    done = true;
+                }
+                // diagnal right
+                if (i < map[i].length - 4 && map[i][j] == 1 && map[i + 5][j + 1] == 1 && map[i + 4][j + 2] == 1
+                        && map[i + 3][j + 3] == 1) {
+                    done = true;
                 }
             }
 
         }
         return done;
+
     }
 
+    // checks if the players move is legal
     public static boolean canMove(int[][] map, int col) {
-        int row=0;
+        int row = 0;
         if (col < 0 || col >= map[row].length)
             return false;
-        
+
         return map[row][col] == 0;
     }
 
-    public static void aiCoinInsert(int map[][], int playerRow, int playerCollum) {
-        int i = 0;
-        int j = 0;
-        for (i = 0; i < 4; i++) {
-            for (j = 0; j < 4; j++) {
+    // dose nothing right now
+    public static void aiCoinInsert(int map[][], int playerRow, int playerCol) {
+        for (int i = 0; i < map.length; i++) {
+
+            for (int j = 0; j < map[i].length; j++) {
+                // collums
+                if (j < map[i].length - 3 && map[i][j] == 1 && map[i][j + 1] == 1 && map[i][j + 2] == 1) {
+                    done = true;
+                }
+                // rows
+                if (i < map[i].length - 4 && map[i][j] == 1 && map[i + 1][j] == 1 && map[i + 2][j] == 1
+                        && map[i + 3][j] == 1) {
+                    done = true;
+                }
+                // diaganal left
+                if (i < map[i].length - 4 && map[i][j] == 1 && map[i + 1][j + 1] == 1 && map[i + 2][j + 2] == 1
+                        && map[i + 3][j + 3] == 1) {
+                    done = true;
+                }
             }
         }
-        if (i > 2 || j > 2) {
-            map[i][playerCollum] = 2;
+
+    }
+
+    // holds the instrutions and other information for the user
+    public static void Text(boolean done) {
+        prn("welcome to Connect four, please slect a row to place your piece\nTo place a coin type \"coin\"\nTo move to a diffrent Collum Type \"col,number\"\nYour sprit is \"!\"\n");
+        enter();
+        if (done == true) {
+            prn("Game over!");
         }
 
     }
 
     // print stuff
-    public static <T> void prn(T stuff) {
-        System.out.print(stuff);
+    public static <T> void prn(Object object) {
+        System.out.print(object);
     }
 
     // clear screen
