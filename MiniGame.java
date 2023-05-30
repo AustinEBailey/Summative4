@@ -50,10 +50,10 @@ public class MiniGame {
     public static int[][] loadMap() {
         int[][] map = {
                 { 0, 0, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 2, 0, 0, 0 },
+                { 0, 0, 0, 0, 2, 0, 0 },
+                { 0, 0, 0, 0, 0, 2, 0 },
+                { 0, 0, 0, 0, 0, 0, 2 },
                 { 0, 0, 0, 0, 0, 0, 0 }
         };
 
@@ -125,13 +125,12 @@ public class MiniGame {
                     done = true;
                 }
                 // diaganal top left to bottom right
-                if (i < map[i].length - 4 && map[i][j] == 1 && map[i + 1][j + 1] == 1 && map[i + 2][j + 2] == 1
+                if (i <=2  && j < map[i].length-3 && map[i][j] == 1 && map[i + 1][j + 1] == 1 && map[i + 2][j + 2] == 1
                         && map[i + 3][j + 3] == 1) {
                     done = true;
                 }
                 // diagnal bottom left to top right
-                if (i >= 3 && j < map[i].length - 3 && map[i][j] == 1 && map[i - 1][j + 1] == 1
-                        && map[i - 2][j + 2] == 1
+                if (i >= 3 && j < map[i].length - 3 && map[i][j] == 1 && map[i - 1][j + 1] == 1   && map[i - 2][j + 2] == 1
                         && map[i - 3][j + 3] == 1) {
                     done = true;
                 }
@@ -161,18 +160,26 @@ public class MiniGame {
 
             for (int j = 0; j < map[i].length; j++) {
                 // collums
-                if (j < map[i].length - 3 && map[i][j] == 1) {
-                    map[i][j + 1] = 2;
-                } else if (i < map[i].length - 4 && map[i][j] == 1 && map[i + 1][j] == 1) {
-                    map[i][j + 1] = 2;
-                } else if (i < map[i].length - 4 && map[i][j] == 1 && map[i + 1][j + 1] == 1) {
-                    map[i][j + 2] = 2;
+                // if (j < map[i].length - 3 && map[i][j] == 1 && map[i][j + 1] == 1 ) {
+                // map[i][j+3] = 2
+                // }
+                // rows
+                // if (i < map[i].length -4 && map[i][j] == 1 && map[i + 1][j] == 1 && map[i +
+                // 2][j] == 1) {
+                // map[i+4][j] = 2;
+                // }
+                // diaganal top left to bottom right
+                if (j > 3 && i < map[i].length - 3 && map[i][j] == 1 && map[i + 1][j - 1] == 1
+                        && map[i + 2][j - 2] == 1) {
+                    map[i][j] = 2;
                 }
-                // diagnal right
-                // if (i < map[i].length - 4 && map[i][j] == 1 && map[i+1][j-1] == 1) {
+                // diagnal bottom left to top right
+                // if (i >= 3 && j < map[i].length - 3 && map[i][j] == 1 && map[i - 1][j + 1] ==
+                // 1 && map[i - 2][j + 2] == 1) {
                 // map[i][j] = 2;
                 // }
             }
+
         }
 
     }
