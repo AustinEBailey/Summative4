@@ -19,7 +19,7 @@ public class MiniGame {
         while (done != true) {
 
             clrscn();
-            // aiCoinInsert(map);
+            aiCoinInsert(map, playerRow, playerRow);
             prnMap(map, playerCol, sprite, playerRow, coins);
 
             String input = in.nextLine();
@@ -50,10 +50,10 @@ public class MiniGame {
     public static int[][] loadMap() {
         int[][] map = {
                 { 0, 0, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 2, 0, 0, 0 },
-                { 0, 0, 0, 0, 2, 0, 0 },
-                { 0, 0, 0, 0, 0, 2, 0 },
-                { 0, 0, 0, 0, 0, 0, 2 },
+                { 0, 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 0, 0 },
                 { 0, 0, 0, 0, 0, 0, 0 }
         };
 
@@ -117,22 +117,25 @@ public class MiniGame {
                 // collums
                 if (j < map[i].length - 3 && map[i][j] == 1 && map[i][j + 1] == 1 && map[i][j + 2] == 1
                         && map[i][j + 3] == 1) {
-                    done = true;
+                            map[i][j] = 2;
+
                 }
                 // rows
                 if (i < map[i].length - 4 && map[i][j] == 1 && map[i + 1][j] == 1 && map[i + 2][j] == 1
                         && map[i + 3][j] == 1) {
-                    done = true;
+                            map[i][j] = 2;
                 }
                 // diaganal top left to bottom right
-                if (i <=2  && j < map[i].length-3 && map[i][j] == 1 && map[i + 1][j + 1] == 1 && map[i + 2][j + 2] == 1
+                if (i <= 2 && j < map[i].length - 3 && map[i][j] == 1 && map[i + 1][j + 1] == 1
+                        && map[i + 2][j + 2] == 1
                         && map[i + 3][j + 3] == 1) {
-                    done = true;
+                            map[i][j] = 2;
                 }
                 // diagnal bottom left to top right
-                if (i >= 3 && j < map[i].length - 3 && map[i][j] == 1 && map[i - 1][j + 1] == 1   && map[i - 2][j + 2] == 1
+                if (i >= 3 && j < map[i].length - 3 && map[i][j] == 1 && map[i - 1][j + 1] == 1
+                        && map[i - 2][j + 2] == 1
                         && map[i - 3][j + 3] == 1) {
-                    done = true;
+                            map[i][j] = 2;
                 }
             }
 
@@ -154,35 +157,35 @@ public class MiniGame {
         return map[row][col] == 0;
     }
 
-    // dose nothing construtive right now
-    public static void aiCoinInsert(int map[][]) {
+    // AI is now unbeatble but still dose not work properly
+    public static void aiCoinInsert(int map[][], int playerCol, int playerRow) {
         for (int i = 0; i < map.length; i++) {
 
             for (int j = 0; j < map[i].length; j++) {
                 // collums
-                // if (j < map[i].length - 3 && map[i][j] == 1 && map[i][j + 1] == 1 ) {
-                // map[i][j+3] = 2
-                // }
+                if (j < map[i].length - 3 && map[i][j] == 1 && map[i][j + 1] == 1 && map[i][j + 2] == 1
+                        && map[i][j + 3] == 1) {
+                    done = true;
+                }
                 // rows
-                // if (i < map[i].length -4 && map[i][j] == 1 && map[i + 1][j] == 1 && map[i +
-                // 2][j] == 1) {
-                // map[i+4][j] = 2;
-                // }
+                if (i < map[i].length - 4 && map[i][j] == 1 && map[i + 1][j] == 1 && map[i + 2][j] == 1
+                        && map[i + 3][j] == 1) {
+                    done = true;
+                }
                 // diaganal top left to bottom right
-                if (j > 3 && i < map[i].length - 3 && map[i][j] == 1 && map[i + 1][j - 1] == 1
-                        && map[i + 2][j - 2] == 1) {
-                    map[i][j] = 2;
+                if (i <= 2 && j < map[i].length - 3 && map[i][j] == 1 && map[i + 1][j + 1] == 1
+                        && map[i + 2][j + 2] == 1
+                        && map[i + 3][j + 3] == 1) {
+                    done = true;
                 }
                 // diagnal bottom left to top right
-                // if (i >= 3 && j < map[i].length - 3 && map[i][j] == 1 && map[i - 1][j + 1] ==
-                // 1 && map[i - 2][j + 2] == 1) {
-                // map[i][j] = 2;
-                // }
+                if (i >= 3 && j < map[i].length - 3 && map[i][j] == 1 && map[i - 1][j + 1] == 1
+                        && map[i - 2][j + 2] == 1
+                        && map[i - 3][j + 3] == 1) {
+                    done = true;
+                }
             }
-
-        }
-
-    }
+    }}
 
     /*
      * holds the instrutions and other information for the user
