@@ -40,7 +40,7 @@ public class MiniGame {
             }
 
         }
-        prn("Game over!");
+        Text(done);
 
     }
 
@@ -117,28 +117,26 @@ public class MiniGame {
                 // collums
                 if (j < map[i].length - 3 && map[i][j] == 1 && map[i][j + 1] == 1 && map[i][j + 2] == 1
                         && map[i][j + 3] == 1) {
-                            map[i][j] = 2;
-
+                    done = true;
                 }
                 // rows
                 if (i < map[i].length - 4 && map[i][j] == 1 && map[i + 1][j] == 1 && map[i + 2][j] == 1
                         && map[i + 3][j] == 1) {
-                            map[i][j] = 2;
+                    done = true;
                 }
                 // diaganal top left to bottom right
                 if (i <= 2 && j < map[i].length - 3 && map[i][j] == 1 && map[i + 1][j + 1] == 1
                         && map[i + 2][j + 2] == 1
                         && map[i + 3][j + 3] == 1) {
-                            map[i][j] = 2;
+                    done = true;
                 }
                 // diagnal bottom left to top right
                 if (i >= 3 && j < map[i].length - 3 && map[i][j] == 1 && map[i - 1][j + 1] == 1
                         && map[i - 2][j + 2] == 1
                         && map[i - 3][j + 3] == 1) {
-                            map[i][j] = 2;
+                    done = true;
                 }
             }
-
         }
         return done;
 
@@ -165,38 +163,44 @@ public class MiniGame {
                 // collums
                 if (j < map[i].length - 3 && map[i][j] == 1 && map[i][j + 1] == 1 && map[i][j + 2] == 1
                         && map[i][j + 3] == 1) {
-                    done = true;
+                    map[i][j] = 2;
+
                 }
                 // rows
                 if (i < map[i].length - 4 && map[i][j] == 1 && map[i + 1][j] == 1 && map[i + 2][j] == 1
                         && map[i + 3][j] == 1) {
-                    done = true;
+                    map[i][j] = 2;
                 }
                 // diaganal top left to bottom right
                 if (i <= 2 && j < map[i].length - 3 && map[i][j] == 1 && map[i + 1][j + 1] == 1
                         && map[i + 2][j + 2] == 1
                         && map[i + 3][j + 3] == 1) {
-                    done = true;
+                    map[i][j] = 2;
                 }
                 // diagnal bottom left to top right
                 if (i >= 3 && j < map[i].length - 3 && map[i][j] == 1 && map[i - 1][j + 1] == 1
                         && map[i - 2][j + 2] == 1
                         && map[i - 3][j + 3] == 1) {
-                    done = true;
+                    map[i][j] = 2;
                 }
             }
-    }}
+
+        }
+       
+    }
 
     /*
      * holds the instrutions and other information for the user
      * done is used to print game over
      */
     public static void Text(boolean done) {
-        prn("welcome to Connect four, please slect a row to place your piece\nTo place a coin type \"coin\"\nTo move to a diffrent column Type \"col,number\"\nYour sprit is \"!\"\n");
-        enter();
         if (done == true) {
             prn("Game over! You wone");
+        }else{
+        prn("welcome to Connect four, please slect a row to place your piece\nTo place a coin type \"coin\"\nTo move to a diffrent column Type \"col,number\"\nYour sprit is \"!\"\n");
+        enter();
         }
+        
 
     }
 
