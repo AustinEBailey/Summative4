@@ -11,9 +11,8 @@ public class MiniGame {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         clrscn();
-        Text();
         int[][] map = loadMap();
-        String[] coins = { "0", "o", "x" };
+        String[] coins = { "0", "o", "o" };
 
         String sprite = "*";
         int playerCol = 0;
@@ -97,12 +96,20 @@ public class MiniGame {
     public static void prnMap(int[][] map, int playerCol, String sprite, int playerRow, String[] coins, int coinP2) {
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
-
+                int prnMap = map[i][j];
                 if ((i == playerRow && j == playerCol)) {
                     prn(sprite);
-                } else {
-                    int prnMap = map[i][j];
+                } else if (map[i][j] == 1) {
+                    prn("\033[0;33m");
                     prn(coins[prnMap]);
+                } else if (map[i][j] == 2) {
+                    prn("\033[0;31m");
+                    prn(coins[prnMap]);
+                } else if (map[i][j] == 0) {
+                    prn("\033[0;34m");
+                    prn(prnMap);
+                    prn("\033[0m");
+
                 }
             }
             System.out.println();
@@ -238,12 +245,16 @@ public class MiniGame {
     public static void Text() {
         if (doneP1 == true) {
             prn("Game over! Player1 won");
+    
         } else if (doneP2 == true) {
             prn("Game over! Player2 won");
+            
         } else if (coinP1 == 1) {
             prn("Player two's turn\n");
+            
         } else {
             prn("Player one's turn\n");
+            
 
         }
 
